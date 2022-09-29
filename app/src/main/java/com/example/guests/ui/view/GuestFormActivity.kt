@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.guests.R
 import com.example.guests.databinding.ActivityGuestFormBinding
+import com.example.guests.ui.GuestModel
 import com.example.guests.ui.viewmodel.GuestFormViewModel
 
 class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
@@ -29,6 +30,7 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
 
         if(v.id == R.id.button_save){
 
+          // view.save(GuestModel(1,"x",false)
 
         }
 
