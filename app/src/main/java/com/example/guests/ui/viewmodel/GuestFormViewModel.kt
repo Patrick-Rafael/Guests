@@ -12,32 +12,45 @@ class GuestFormViewModel(application: Application) : AndroidViewModel(applicatio
 
 
     // Acesso a dados
-    private val repository = GuestRepository.getInstance(application.applicationContext)
+    private val repository = GuestRepository(application)
 
-    private var _saveGuest = MutableLiveData<Boolean>()
-    val saveGuest: LiveData<Boolean> = _saveGuest
+    private val guestModel = MutableLiveData<GuestModel>()
+    val saveGuest: LiveData<GuestModel> = guestModel
 
-    private var _guest = MutableLiveData<GuestModel>()
-    val guest: LiveData<GuestModel> = _guest
+    private var _guest = MutableLiveData<String>()
+    val guest: LiveData<String> = _guest
 
     /**
      * Salva convidado
      * */
-    fun save(id: Int, name: String, presence: Boolean) {
-        val guest = GuestModel(id, name, presence)
+    fun save(guest:GuestModel){
 
-        if (id == 0) {
-            _saveGuest.value = repository.save(guest)
-        } else {
-            _saveGuest.value = repository.update(guest)
+
+        if(guest.id == 0) {
+            if(repository.save(guest)){
+                _guest.value = "Inserção com sucesso"
+            }else{
+                _guest.value = "Falha"
+
+            }
+
+
+        }else{
+            if( repository.update(guest)){
+                _guest.value = "Atualização com sucesso"
+            }else{
+                _guest.value = "Falha"
+            }
+
         }
+
     }
 
     /**
      * Carrega convidado
      * */
-    fun load(id: Int) {
-        _guest.value = repository.get(id)
+    fun get(id: Int) {
+        guestModel.value = repository.get(id)
     }
 
 }

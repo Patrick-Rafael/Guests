@@ -15,6 +15,7 @@ import com.example.guests.ui.constants.DataBaseConstants.GUEST.TABLE_NAME
 @Database(entities = [GuestDataBase::class], version = 1)
 abstract class GuestDataBase() : RoomDatabase() {
 
+    abstract fun guestDAO(): GuestDAO
 
     companion object {
 
@@ -34,7 +35,7 @@ abstract class GuestDataBase() : RoomDatabase() {
             return INSTANCE
         }
 
-        private val MIGRATION_1_2: Migration = object : Migration(1, 2){
+        private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
 
 
@@ -43,7 +44,3 @@ abstract class GuestDataBase() : RoomDatabase() {
         }
     }
 }
-
-
-fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {}
-

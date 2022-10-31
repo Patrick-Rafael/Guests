@@ -8,9 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.guests.R
 import com.example.guests.databinding.ActivityGuestFormBinding
-import com.example.guests.ui.model.GuestModel
-import com.example.guests.ui.constants.DataBaseConstants
 import com.example.guests.ui.constants.GuestConstants
+import com.example.guests.ui.model.GuestModel
 import com.example.guests.ui.viewmodel.GuestFormViewModel
 
 class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
@@ -45,7 +44,14 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
             val name = binding.editName.text.toString()
             val presence = binding.radioPresent.isChecked
 
-            viewModel.save(guestId, name, presence)
+            val model = GuestModel().apply {
+                this.id = guestId
+                this.name = name
+                this.presence = presence
+            }
+            viewModel.save(model)
+
+
         }
     }
 
@@ -53,7 +59,7 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
         val bundle = intent.extras
         if (bundle != null) {
             guestId = bundle.getInt(GuestConstants.GUEST.ID)
-            viewModel.load(guestId)
+            viewModel.get(guestId)
         }
     }
 
